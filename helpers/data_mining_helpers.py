@@ -1,38 +1,22 @@
 import nltk
 
-"""
-Helper functions for data mining lab session 2018 Fall Semester
-Author: Elvis Saravia
-Email: ellfae@gmail.com
-"""
-
 def format_rows(docs):
-    """ format the text field and strip special characters """
+    """Format the text field and strip special characters."""
     D = []
-    for d in docs.data:
+    for d in docs:  # Loop through each item in the Series
         temp_d = " ".join(d.split("\n")).strip('\n\t')
         D.append([temp_d])
     return D
 
-def format_labels(target, docs):
-    """ format the labels """
-    return docs.target_names[target]
+def check_missing_values(df):
+    """Check for missing values in DataFrame and return the count."""
+    missing_count = df.isnull().sum().sum()  # Count total missing values
+    return f"The total amount of missing records is: {missing_count}"
 
-def check_missing_values(row):
-    """ functions that check and verifies if there are missing values in dataframe """
-    counter = 0
-    for element in row:
-        if element == True:
-            counter+=1
-    return ("The amoung of missing records is: ", counter)
-
-def tokenize_text(text, remove_stopwords=False):
-    """
-    Tokenize text using the nltk library
-    """
+def tokenize_text(text):
+    """Tokenize text using the nltk library."""
     tokens = []
-    for d in nltk.sent_tokenize(text, language='english'):
-        for word in nltk.word_tokenize(d, language='english'):
-            # filters here
+    for sentence in nltk.sent_tokenize(text, language='english'):
+        for word in nltk.word_tokenize(sentence, language='english'):
             tokens.append(word)
     return tokens
